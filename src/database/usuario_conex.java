@@ -17,7 +17,7 @@ delete (delete)
 
 
 public class usuario_conex {
-    private Connection conexao;
+    private final Connection conexao;
 
     public usuario_conex(Connection conexao) {
         this.conexao = conexao;

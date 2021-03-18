@@ -21,6 +21,7 @@ public class endereco_conex {
         PreparedStatement inserir = conexao.prepareStatement(sql_code);
         inserir.execute();
         conexao.close();
+
     }
 
 }

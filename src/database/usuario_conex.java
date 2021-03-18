@@ -22,18 +22,38 @@ public class usuario_conex {
         this.conexao = conexao;
     }
 
-
     public void inserir_usuario(usuario user) throws SQLException{
-        String sql_code = "INSERT INTO usuario (nome,email,telefone,endereco,endereco_numero," +
-                "endereco_bairro,cidade,UF) VALUES" + "('"+user.getNome()+"','"+user.getEmail()+"','"
-                +user.getTelefone()+"','"+user.getTelefone()+"','"+user.getEndereco()+"','"+user.getEndereco_numero()+
-                "','"+user.getEndereco_bairro()+"','"+user.getCidade()+"','"+user.getUF()+");";
+        String sql_code = "INSERT INTO usuario (nome,email,telefone) VALUES" + "('"+user.getNome()+"','"+user.getEmail()+"','"
+                +user.getTelefone()+");";
                 PreparedStatement inserir = conexao.prepareStatement(sql_code);
+                inserir.execute();
+                conexao.close();
+    }
+    public void remover_usuario(usuario user) throws  SQLException{
+        String sql_code = "DELETE FROM USUARIO WHERE ID = "+user.getID()+"";
+        PreparedStatement inserir = conexao.prepareStatement(sql_code);
         inserir.execute();
         conexao.close();
     }
-    public void remover_usuario(usuario user){
 
+    public void update_nome(usuario user) throws SQLException{
+        String sql_code = "UPDATE CLIENTE SET nome = '"+user.getNome()+"' WHERE ID = "+user.getID()+"";
+        PreparedStatement inserir = conexao.prepareStatement(sql_code);
+        inserir.execute();
+        conexao.close();
     }
 
+    public void update_email(usuario user) throws SQLException{
+        String sql_code = "UPDATE CLIENTE SET email = '"+user.getEmail()+"' WHERE ID = "+user.getID()+"";
+        PreparedStatement inserir = conexao.prepareStatement(sql_code);
+        inserir.execute();
+        conexao.close();
+    }
+
+    public void update_telefone(usuario user) throws SQLException{
+        String sql_code = "UPDATE CLIENTE SET telefone = '"+user.getTelefone()+"' WHERE ID = "+user.getID()+"";
+        PreparedStatement inserir = conexao.prepareStatement(sql_code);
+        inserir.execute();
+        conexao.close();
+    }
 }

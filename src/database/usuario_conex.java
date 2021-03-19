@@ -23,6 +23,15 @@ public class usuario_conex {
         this.conexao = conexao;
     }
 
+    public void tested() throws SQLException{
+        String sql_code = "INSERT INTO usuario (nome,email,telefone) VALUES('abc','abcdef@gmail.com',99824-14151)" ;
+        PreparedStatement inserir = conexao.prepareStatement(sql_code);
+        inserir.execute();
+        conexao.close();
+    }
+
+
+
     public void inserir_usuario(usuario user) throws SQLException{
         String sql_code = "INSERT INTO usuario (nome,email,telefone) VALUES" + "('"+user.getNome()+"','"+user.getEmail()+"','"
                 +user.getTelefone()+");";

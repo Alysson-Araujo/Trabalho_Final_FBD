@@ -7,8 +7,7 @@ public class usuario {
     private String telefone;
 
 
-    public usuario(String nome, String email, String telefone, String endereco, int endereco_numero,
-                   String endereco_bairro, String cidade, String UF) {
+    public usuario(String nome, String email, String telefone) {
         this.nome = nome;
         this.email = email;
         this.telefone = telefone;

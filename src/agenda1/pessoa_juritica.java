@@ -14,7 +14,7 @@ public class pessoa_juritica extends usuario {
 
 
     public pessoa_juritica(String nome, String email, String telefone, String endereco, int endereco_numero, String endereco_bairro, String cidade, String UF) {
-        super(nome, email, telefone, endereco, endereco_numero, endereco_bairro, cidade, UF);
+        super(nome, email, telefone);
     }
 
 

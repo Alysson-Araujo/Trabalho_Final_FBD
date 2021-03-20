@@ -6,7 +6,7 @@ public class pessoa_fisica extends usuario{
 
 
     public pessoa_fisica(String nome, String email, String telefone, String endereco, int endereco_numero, String endereco_bairro, String cidade, String UF) {
-        super(nome, email, telefone, endereco, endereco_numero, endereco_bairro, cidade, UF);
+        super(nome, email, telefone);
     }
 
     public String getCPF() {

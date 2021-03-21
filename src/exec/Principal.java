@@ -12,18 +12,18 @@ import java.util.Scanner;
 public class Principal {
     public static void menu (){
         System.out.println("_________________________________________\n");
-        System.out.println("    AGENDA TELEFONICA ONLINE!              ");
+        System.out.println("    AGENDA TELEFÔNICA ONLINE!              ");
         System.out.println("_________________________________________\n");
         System.out.println("[1] - Mostra todas as pessoas fisicas");// n feito
         System.out.println("[2] - Mostra todas as pessoas juridicas"); // n feito
         System.out.println("[3] - Mostra todos os usuarios");// feito
-        System.out.println("[4] - Mostrar todos os enderecos"); // feito
+        System.out.println("[4] - Mostra todos os endereços"); // feito
         System.out.println("[5] - Busca um estabelecimento comercial");// n feito
-        System.out.println("[6] - Busque por uma pessoa juritica");// n feito
-        System.out.println("[7] - Busque por uma pessoa fisica");// n feito
-        System.out.println("[8] - busque por todas as pessoas que moram em uma determinada cidade");// n feito
-        System.out.println("[9] - busque por todas as pessoas que moram em um determinado estado");// n feito
-        System.out.println("[10] - busque por todas as pessoas que moram em uma determinada rua");// n feito
+        System.out.println("[6] - Busca por uma pessoa jurídica");// n feito
+        System.out.println("[7] - Busca por uma pessoa física");// n feito
+        System.out.println("[8] - Busca por todas as pessoas que moram em uma determinada cidade");// n feito
+        System.out.println("[9] - Busca por todas as pessoas que moram em um determinado estado");// n feito
+        System.out.println("[10] - Busca por todas as pessoas que moram em uma determinada rua");// n feito
     }
 
 
@@ -50,20 +50,20 @@ public class Principal {
                 case 1:
                     try
                     {
-                        System.out.println("Digite [1] para cadastrar uma Pessoa Fisica; \n" +
-                                           "Digite [2] para cadastrar uma Pessoa Juridica;");
+                        System.out.println("[1] Cadastrar uma Pessoa Fisica; \n" +
+                                           "[2] Cadastrar uma Pessoa Juridica;");
                         int tipoCadastro = Integer.parseInt(in.nextLine());
 
                         if (tipoCadastro ==1){
-                            System.out.println("Diga as informacoes que essa pessoa possui abaixo >>> ");
+                            System.out.println("[Digite os seguintes dados]");
                             System.out.print("Nome Completo: "); String Nome = in.nextLine(); System.out.print("\n");
-                            System.out.print("e-mail: "); String email = in.nextLine(); System.out.print("\n");
-                            System.out.print("telefone: "); String telefone = in.nextLine(); System.out.print("\n");
+                            System.out.print("E-mail: "); String email = in.nextLine(); System.out.print("\n");
+                            System.out.print("Telefone: "); String telefone = in.nextLine(); System.out.print("\n");
                             System.out.print("CPF: "); String CPF = in.nextLine();System.out.print("\n");
                             System.out.print("Rua: "); String Rua = in.nextLine();System.out.print("\n");
-                            System.out.print("Numero da residencia: "); int num_residencia = Integer.parseInt(in.nextLine());System.out.print("\n");
+                            System.out.print("Numero da residência: "); int num_residencia = Integer.parseInt(in.nextLine());System.out.print("\n");
                             System.out.print("Bairro: "); String bairro = in.nextLine();System.out.print("\n");
-                            System.out.print("Cidade e UF exemplo quixada-CE:  "); String cidade = in.nextLine();System.out.print("\n");
+                            System.out.print("Cidade e UF - (Quixadá-CE):  "); String cidade = in.nextLine();System.out.print("\n");
                             System.out.print("UF: ");String UF = in.nextLine();System.out.print("\n");
                             /* instancia uma nova pessoa para colocar no BD*/
                             Pessoa_fisica pessoaFisica = new Pessoa_fisica(Nome,email,telefone,CPF);

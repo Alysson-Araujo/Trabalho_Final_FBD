@@ -11,8 +11,10 @@ public class Pessoa_juridica extends Usuario {
     private Connection conexao;
 
 
-    public Pessoa_juridica(String nome, String email, String telefone, String endereco, int endereco_numero, String endereco_bairro, String cidade, String UF) {
+    public Pessoa_juridica(String nome, String email, String telefone, String CNPJ, String tipo_empresa){
         super(nome, email, telefone);
+        this.CNPJ = CNPJ;
+        this.tipo_empresa = tipo_empresa;
     }
 
 

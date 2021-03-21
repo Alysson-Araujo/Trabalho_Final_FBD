@@ -15,8 +15,8 @@ public class Endereco_conex {
     }
 
     public void inserir_endereco(Endereco endereco) throws SQLException{
-        String sql_code = "INSERT INTO endereco (rua,numero,bairro,cidade,UF) VALUES" + "('"+endereco.getRua()+"','"+
-                endereco.getNumero()+"','"+endereco.getBairro()+"','"+endereco.getCidade()+"','"+endereco.getUF()+");";
+        String sql_code = "INSERT INTO endereco (rua,numero,bairro,cidade,UF) VALUES" + "('"+endereco.getRua()+"',"+
+                endereco.getNumero()+",'"+endereco.getBairro()+"','"+endereco.getCidade()+"','"+endereco.getUF()+"');";
         PreparedStatement inserir = conexao.prepareStatement(sql_code);
         inserir.execute();
         conexao.close();

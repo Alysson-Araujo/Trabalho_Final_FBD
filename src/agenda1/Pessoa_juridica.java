@@ -2,18 +2,16 @@ package agenda1;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import database.conexao;
 
 
-public class pessoa_juritica extends usuario {
+public class Pessoa_juridica extends Usuario {
     private String CNPJ;
     private String tipo_empresa;
     private Connection conexao;
 
 
-    public pessoa_juritica(String nome, String email, String telefone, String endereco, int endereco_numero, String endereco_bairro, String cidade, String UF) {
+    public Pessoa_juridica(String nome, String email, String telefone, String endereco, int endereco_numero, String endereco_bairro, String cidade, String UF) {
         super(nome, email, telefone);
     }
 
@@ -35,7 +33,7 @@ public class pessoa_juritica extends usuario {
     }
 
 
-    public void update_tipo_empresa(pessoa_juritica PJ) throws SQLException{
+    public void update_tipo_empresa(Pessoa_juridica PJ) throws SQLException{
         String sql_code = "UPDATE CLIENTE SET nome = '"+PJ.getTipo_empresa()+"' WHERE ID = "+PJ.getCNPJ()+"";
         PreparedStatement inserir = conexao.prepareStatement(sql_code);
         inserir.execute();

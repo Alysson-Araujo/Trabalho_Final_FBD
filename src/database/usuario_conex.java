@@ -1,3 +1,4 @@
+/*
 package database;
 
 import java.sql.Connection;
@@ -15,7 +16,7 @@ update (update)
 delete (delete)
 */
 
-
+/*
 public class usuario_conex {
     private final Connection conexao;
 
@@ -67,3 +68,4 @@ public class usuario_conex {
         conexao.close();
     }
 }
+*/

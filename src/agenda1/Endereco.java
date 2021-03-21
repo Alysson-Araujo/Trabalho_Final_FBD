@@ -1,6 +1,6 @@
 package agenda1;
 
-public class endereco {
+public class Endereco {
     private int ID_end;
     private String rua;
     private int numero;
@@ -8,8 +8,16 @@ public class endereco {
     private String cidade;
     private String UF;
 
-    public endereco(int ID_end, String rua, int numero, String bairro, String cidade, String UF) {
+    public Endereco(int ID_end, String rua, int numero, String bairro, String cidade, String UF) {
         this.ID_end = ID_end;
+        this.rua = rua;
+        this.numero = numero;
+        this.bairro = bairro;
+        this.cidade = cidade;
+        this.UF = UF;
+    }
+
+    public Endereco(String rua, int numero, String bairro, String cidade, String UF) {
         this.rua = rua;
         this.numero = numero;
         this.bairro = bairro;

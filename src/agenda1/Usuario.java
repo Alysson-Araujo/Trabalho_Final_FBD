@@ -1,19 +1,19 @@
 package agenda1;
 
-public class usuario {
+abstract class Usuario {
     private int ID;
     private String nome;
     private String email;
     private String telefone;
 
 
-    public usuario(String nome, String email, String telefone) {
+    public Usuario(String nome, String email, String telefone) {
         this.nome = nome;
         this.email = email;
         this.telefone = telefone;
     }
 
-public usuario(){}
+public Usuario(){}
 
         public int getID() {
             return ID;

@@ -50,8 +50,8 @@ public class Principal {
                 case 1:
                     try
                     {
-                        System.out.println("[1] Cadastrar uma Pessoa Física; \n" +
-                                           "[2] Cadastrar uma Pessoa Jurídica;");
+                        System.out.println("[1] - Cadastrar uma Pessoa Física; \n" +
+                                           "[2] - Cadastrar uma Pessoa Jurídica;");
                         int tipoCadastro = Integer.parseInt(in.nextLine());
 
                         if (tipoCadastro ==1){

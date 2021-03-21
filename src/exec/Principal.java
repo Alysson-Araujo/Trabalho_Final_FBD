@@ -14,8 +14,8 @@ public class Principal {
         System.out.println("_________________________________________\n");
         System.out.println("    AGENDA TELEFÔNICA ONLINE!              ");
         System.out.println("_________________________________________\n");
-        System.out.println("[1] - Mostra todas as pessoas fisicas");// n feito
-        System.out.println("[2] - Mostra todas as pessoas juridicas"); // n feito
+        System.out.println("[1] - Mostra todas as pessoas físicas");// n feito
+        System.out.println("[2] - Mostra todas as pessoas jurídicas"); // n feito
         System.out.println("[3] - Mostra todos os usuarios");// feito
         System.out.println("[4] - Mostra todos os endereços"); // feito
         System.out.println("[5] - Busca um estabelecimento comercial");// n feito
@@ -50,8 +50,8 @@ public class Principal {
                 case 1:
                     try
                     {
-                        System.out.println("[1] Cadastrar uma Pessoa Fisica; \n" +
-                                           "[2] Cadastrar uma Pessoa Juridica;");
+                        System.out.println("[1] Cadastrar uma Pessoa Física; \n" +
+                                           "[2] Cadastrar uma Pessoa Jurídica;");
                         int tipoCadastro = Integer.parseInt(in.nextLine());
 
                         if (tipoCadastro ==1){

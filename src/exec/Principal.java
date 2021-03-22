@@ -3,6 +3,7 @@ package exec;
 import database.*;
 import agenda1.*;
 
+import java.beans.beancontext.BeanContextServiceRevokedEvent;
 import java.sql.*;
 import java.util.Scanner;
 
@@ -11,13 +12,13 @@ public class Principal {
         System.out.println("_________________________________________\n");
         System.out.println("    AGENDA TELEFONICA ONLINE!              ");
         System.out.println("_________________________________________\n");
-        System.out.println("[1] - Insira um novo usuário");// feito
-        System.out.println("[2] - Mostrar todos as pessoas físicas da agenda");// feito
-        System.out.println("[3] - Mostrar todas as pessoas jurídicas da agenda"); // feito
-        System.out.println("[4] - Mostrar todos os endereços");// n feito
-        System.out.println("[5] - Busque por uma pessoa juritica");// n feito
-        System.out.println("[6] - Busque por uma pessoa fisica");// n feito
-        System.out.println("[7] - busque por todas as pessoas que moram em uma determinada cidade");// n feito
+        System.out.println("[1] - Insira um novo usuário");//
+        System.out.println("[2] - Remover uma pessoa física");//
+        System.out.println("[3] - Remover uma pessoa jurídica"); //
+        System.out.println("[4] - Alterar algum dado de uma pessoa física");// n feito
+        System.out.println("[5] - Alterar algum dado de uma pessoa jurídica");// n feito
+        System.out.println("[6] - Mostrar por todos os enderecos de uma cidade:");// n feito
+        System.out.println("[7] - Busque por uma pessoa fisica:");// n feito
         System.out.println("[8] - busque por todas as pessoas que moram em um determinado estado");// n feito
         System.out.println("[9] - busque por todas as pessoas que moram em uma determinada rua");// n feito
     }
@@ -36,12 +37,13 @@ public class Principal {
         /* Objeto para adicionar uma pessoa física*/
 
         /*responsável em fazer a seleção de menu*/
-        int numerador= Integer.parseInt(in.nextLine());
+        int numerador;
 
         boolean programa = true;
 
         while (programa){
-
+        menu();
+        numerador = Integer.parseInt(in.nextLine());
             switch (numerador){
                 case 1:
                     try {
@@ -125,8 +127,9 @@ public class Principal {
                              * está em tal cidade*/
 
                             Statement st = conexao_BD.createStatement();
-                            st.executeQuery("SELECT rua,cidade,UF FROM endereco WHERE rua = '" + Rua +
-                                    "' AND cidade = '" + cidade + "' AND UF = '" + UF + "';");
+                            st.executeQuery("SELECT rua,cidade,UF,numero FROM endereco WHERE rua = '" + Rua +
+                                    "' AND cidade = '" + cidade + "' AND UF = '" + UF + "' AND rua = "+
+                                    num_residencia+" ;");
                             ResultSet rs = st.getResultSet();
 
 
@@ -138,7 +141,9 @@ public class Principal {
                                 String verifica_cidade = rs.getString("cidade");
                                 String verifica_rua = rs.getString("rua");
                                 String verifica_UF = rs.getString("UF");
-                                if (verifica_UF.equals(UF) && verifica_cidade.equals(cidade) && verifica_rua.equals(Rua)) {
+                                int verifica_num_residencia = rs.getInt("numero");
+                                if (verifica_UF.equals(UF) && verifica_cidade.equals(cidade) && verifica_rua.equals(Rua)
+                                    && verifica_num_residencia==num_residencia) {
                                     existeNaTabelaEndereco = true;
                                     break;
                                 } else {
@@ -196,18 +201,15 @@ public class Principal {
 
                                 /* o antigo que estava
                                 Endereco_conex EndConex = new Endereco_conex(conexao_BD);
-
                                 // pegamos o id_usuario que estamos cadastrando
                                 st.executeQuery("SELECT id_usuario FROM pessoa_fisica WHERE CPF = '" + CPF + "';");
                                 rs = st.getResultSet();
                                 int id_usuario = rs.getInt("id_usuario");
-
                                 // pegamos o id_endereco do endereco já presente na tabela endereco
                                 st.executeQuery("SELECT id_endereco FROM endereco WHERE rua = '" + Rua + "' AND cidade = '" +
                                         cidade + "' AND UF= '" + UF + "';");
                                 rs = st.getResultSet();
                                 int id_endereco = rs.getInt("id_endereco");
-
                                 st.executeQuery("INSERT TABLE usuario_endereco (id_usuario,id_endereco)" +
                                         "VALUES('" + id_usuario + "','" + id_endereco + "')");
                                 */
@@ -274,7 +276,7 @@ public class Principal {
                             String UF = in.nextLine();
 
                             System.out.print("\n");
-                            System.out.print("Tipo da empresa");
+                            System.out.print("Tipo da empresa: ");
                             String Tipo_empresa = in.nextLine();
 
                             /* instancia uma nova pessoa para colocar no BD*/
@@ -282,8 +284,9 @@ public class Principal {
 
                             Pessoa_juridica_conex PJC = new Pessoa_juridica_conex(conexao_BD);
 
+
                             //IMPORTANTE MUDANÇA!
-                            //PJC.inserir_pessoa_juridica(pessoaJuridica);
+                            PJC.inserir_pessoa_juridica2(Nome,email,telefone,CNPJ,Tipo_empresa);
 
                             /*Parte onde inserimos o endereco da pessoa na tabela endereco do BD*/
 
@@ -291,8 +294,9 @@ public class Principal {
                              * está em tal cidade*/
 
                             Statement st = conexao_BD.createStatement();
-                            st.executeQuery("SELECT rua,cidade,UF FROM endereco WHERE rua = '" + Rua +
-                                    "' AND cidade = '" + cidade + "' AND UF = '" + UF + "';");
+                            st.executeQuery("SELECT rua,cidade,UF,numero FROM endereco WHERE rua = '" + Rua +
+                                    "' AND cidade = '" + cidade + "' AND UF = '" + UF + "' AND rua = "+
+                                    num_residencia+" ;");
                             ResultSet rs = st.getResultSet();
 
 
@@ -304,7 +308,9 @@ public class Principal {
                                 String verifica_cidade = rs.getString("cidade");
                                 String verifica_rua = rs.getString("rua");
                                 String verifica_UF = rs.getString("UF");
-                                if (verifica_UF.equals(UF) && verifica_cidade.equals(cidade) && verifica_rua.equals(Rua)) {
+                                int verifica_num_residencia = rs.getInt("numero");
+                                if (verifica_UF.equals(UF) && verifica_cidade.equals(cidade) && verifica_rua.equals(Rua)
+                                        && verifica_num_residencia==num_residencia) {
                                     existeNaTabelaEndereco = true;
                                     break;
                                 } else {
@@ -359,18 +365,15 @@ public class Principal {
                                  *  */
                                 /*
                                 Endereco_conex EndConex = new Endereco_conex(conexao_BD);
-
                                 // pegamos o id_usuario que estamos cadastrando
                                 st.executeQuery("SELECT id_usuario FROM pessoa_fisica WHERE CPF = '" + CNPJ + "';");
                                 rs = st.getResultSet();
                                 int id_usuario = rs.getInt("id_usuario");
-
                                 // pegamos o id_endereco do endereco já presente na tabela endereco
                                 st.executeQuery("SELECT id_endereco FROM endereco WHERE rua = '" + Rua + "' AND cidade = '" +
                                         cidade + "' AND UF= '" + UF + "';");
                                 rs = st.getResultSet();
                                 int id_endereco = rs.getInt("id_endereco");
-
                                 st.executeQuery("INSERT TABLE usuario_endereco (id_usuario,id_endereco)" +
                                         "VALUES('" + id_usuario + "','" + id_endereco + "')");
                                 */
@@ -381,18 +384,55 @@ public class Principal {
                         System.out.println("Valores Errados. Por favor, escreva aquilo que está sendo pedido no formato correto!" + " " +
                                 "\n Voltando para o menu...");
                     }
-                    catch(Exception e){System.out.println("Não coloque informações que não condizem com o que é " +
-                            "pedido");}
+                    catch(Exception e){System.out.print("");}
                     break;
-                case 2:
 
+                case 2:
+                    System.out.print("Digite o CPF da pessoa física: ");
+                    String CPF = in.nextLine();
+                    Crud.excluir_pessoa_fisica(CPF);
+                    break;
+
+                case 3:
+                    System.out.print("Digite o CNPJ da pessoa física: ");
+                    String CNPJ= in.nextLine();
+                    Crud.excluir_pessoa_juridica(CNPJ);
+                    break;
+
+                case 4:
+                    System.out.println("[1] para mudar o nome \n" +
+                            "[2] para mudar o email \n" +
+                            "[3] para mudar o telefone \n");
+                    String opcao_PF = in.nextLine();
+                    Crud.alterar_dados_pessoa_fisica(opcao_PF);
+                    break;
+
+                case 5:
+                    System.out.println("[1] para mudar o nome \n" +
+                            "[2] para mudar o email \n" +
+                            "[3] para mudar o telefone \n" +
+                            "[4] para mudar o CNPJ");
+                    String opcao_PJ = in.nextLine();
+                    Crud.alterar_dados_pessoa_juridica(opcao_PJ);
+                    break;
+
+                case 6:
+                    System.out.println("Digite o nome da cidade: ");
+                    System.out.print("Cidade:");
+                    String cidade = in.nextLine();
+                    System.out.println("");
+
+                    System.out.println("Digite a UF dessa cidade: ");
+                    System.out.print("UF:");
+                    String UF = in.nextLine();
+                    System.out.println("");
+                    Crud.buscar_ruas_pela_cidade(cidade,UF);
                     break;
 
                 case 0:
                     programa = false;
                     break;
             }
-
 
         }
     }

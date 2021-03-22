@@ -3,10 +3,7 @@ package exec;
 import database.*;
 import agenda1.*;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.Scanner;
 
 public class Principal {
@@ -15,15 +12,14 @@ public class Principal {
         System.out.println("    AGENDA TELEFONICA ONLINE!              ");
         System.out.println("_________________________________________\n");
         System.out.println("[1] - Insira um novo usuário");// feito
-        System.out.println("[2] - Mostrar todos os usuários da agenda;"); // n feito
-        System.out.println("[3] - Mostrar todos as pessoas físicas da agenda");// feito
-        System.out.println("[4] - Mostrar todas as pessoas jurídicas da agenda"); // feito
-        System.out.println("[5] - Mostrar todos os endereços");// n feito
-        System.out.println("[6] - Busque por uma pessoa juritica");// n feito
-        System.out.println("[7] - Busque por uma pessoa fisica");// n feito
-        System.out.println("[8] - busque por todas as pessoas que moram em uma determinada cidade");// n feito
-        System.out.println("[9] - busque por todas as pessoas que moram em um determinado estado");// n feito
-        System.out.println("[10] - busque por todas as pessoas que moram em uma determinada rua");// n feito
+        System.out.println("[2] - Mostrar todos as pessoas físicas da agenda");// feito
+        System.out.println("[3] - Mostrar todas as pessoas jurídicas da agenda"); // feito
+        System.out.println("[4] - Mostrar todos os endereços");// n feito
+        System.out.println("[5] - Busque por uma pessoa juritica");// n feito
+        System.out.println("[6] - Busque por uma pessoa fisica");// n feito
+        System.out.println("[7] - busque por todas as pessoas que moram em uma determinada cidade");// n feito
+        System.out.println("[8] - busque por todas as pessoas que moram em um determinado estado");// n feito
+        System.out.println("[9] - busque por todas as pessoas que moram em uma determinada rua");// n feito
     }
 
 
@@ -34,7 +30,7 @@ public class Principal {
         Connection conexao_BD = new conexao().getConnection();
         //usuario_conex colocar = new usuario_conex(teste);
         //colocar.tested();
-        Crud.mostrar_todos_tabela("endereco");
+        //Crud.mostrar_todos_tabela("endereco");
         //teste.close();
         boolean existeNaTabelaEndereco = false;
         /* Objeto para adicionar uma pessoa física*/
@@ -58,8 +54,8 @@ public class Principal {
                             System.out.print("Nome Completo: ");
                             String Nome = in.nextLine();
                             for(int i =0;i < Nome.length();i++){
-                                Character caractere = Nome.charAt(i);
-                                if(Character.isDigit(caractere)){
+                                Character caractere1 = Nome.charAt(i);
+                                if(Character.isDigit(caractere1)){
                                     throw new Exception();
                                 }
                             }
@@ -73,9 +69,9 @@ public class Principal {
                             System.out.print("telefone: ");
                             String telefone = in.nextLine();
                             for(int i =0;i < telefone.length();i++){
-                                Character caractere = telefone.charAt(i);
-                                if(Character.isAlphabetic(caractere)){
-                                    throw new Exception(telefone);
+                                Character caractere2 = telefone.charAt(i);
+                                if(Character.isAlphabetic(caractere2)){
+                                    throw new Exception();
                                 }
                             }
 
@@ -83,8 +79,8 @@ public class Principal {
                             System.out.print("CPF: ");
                             String CPF = in.nextLine();
                             for(int i =0;i < CPF.length();i++){
-                                Character caractere = CPF.charAt(i);
-                                if(Character.isAlphabetic(caractere)){
+                                Character caractere3 = CPF.charAt(i);
+                                if(Character.isAlphabetic(caractere3)){
                                     throw new Exception();
                                 }
                             }
@@ -108,6 +104,13 @@ public class Principal {
                             System.out.print("\n");
                             System.out.print("UF: ");
                             String UF = in.nextLine();
+                            for(int i =0;i < Nome.length();i++){
+                                Character caractere4 = UF.charAt(i);
+                                if(Character.isDigit(caractere4)){
+                                    throw new Exception();
+                                }
+                            }
+
 
                             System.out.print("\n");
                             /* instancia uma nova pessoa para colocar no BD*/
@@ -148,10 +151,50 @@ public class Principal {
                                 Endereco_conex EndConex = new Endereco_conex(conexao_BD);
                                 Endereco novo_endereco = new Endereco(Rua, num_residencia, bairro, cidade, UF);
                                 EndConex.inserir_endereco(novo_endereco);
+
+
+                                /*pegar o id do endereço adicionado agora! */
+                                st.executeQuery("SELECT id_endereco FROM endereco WHERE rua = '" + Rua +
+                                        "' AND cidade = '" + cidade + "' AND UF = '" + UF + "';");
+                                ResultSet rs_idEndereco = st.getResultSet();
+                                int id_endereco = rs_idEndereco.getInt("id_endereco");
+
+                                /*Pegando o ID do usuário adicionado agora!, que no caso é o CPF! Então não vai precisar*/
+
+
+
+                                /* inserindo na tabela de relacionamento entre pessoa fisica e endereço*/
+                                String sql_code ="INSERT INTO pessoafisica_endereco(id_pessoafisica,id_endereco)" +
+                                        " VALUES('"+CPF+"',"+id_endereco+")";
+                                PreparedStatement inserir = conexao_BD.prepareStatement(sql_code);
+                                inserir.execute();
+
+
                             } else {
-                                /* pegaria o id_endereco e relacionar com o id_usuario do usuario que está sendo
-                                 * colocado agora.
+                                /* nessa situação, o endereco já está presente na tabela endereço
                                  *  */
+
+                                /*pegar o id do endereço adicionado agora! */
+                                st.executeQuery("SELECT id_endereco FROM endereco WHERE rua = '" + Rua +
+                                        "' AND cidade = '" + cidade + "' AND UF = '" + UF + "';");
+                                ResultSet rs_idEndereco = st.getResultSet();
+                                int id_endereco = rs_idEndereco.getInt("id_endereco");
+
+                                /*Pegando o ID do usuário adicionado agora!, que no caso é o CPF! Então não vai precisar*/
+
+
+
+                                /* inserindo na tabela de relacionamento entre pessoa fisica e endereço*/
+
+
+                                String sql_code ="INSERT INTO pessoafisica_endereco(id_pessoafisica,id_endereco)" +
+                                        " VALUES('"+CPF+"',"+id_endereco+")";
+                                PreparedStatement inserir = conexao_BD.prepareStatement(sql_code);
+                                inserir.execute();
+
+
+
+                                /* o antigo que estava
                                 Endereco_conex EndConex = new Endereco_conex(conexao_BD);
 
                                 // pegamos o id_usuario que estamos cadastrando
@@ -167,7 +210,9 @@ public class Principal {
 
                                 st.executeQuery("INSERT TABLE usuario_endereco (id_usuario,id_endereco)" +
                                         "VALUES('" + id_usuario + "','" + id_endereco + "')");
+                                */
                             }
+
                         }
 
 
@@ -231,11 +276,14 @@ public class Principal {
                             System.out.print("\n");
                             System.out.print("Tipo da empresa");
                             String Tipo_empresa = in.nextLine();
+
                             /* instancia uma nova pessoa para colocar no BD*/
                             Pessoa_juridica pessoaJuridica = new Pessoa_juridica(Nome, email, telefone, CNPJ,Tipo_empresa);
 
                             Pessoa_juridica_conex PJC = new Pessoa_juridica_conex(conexao_BD);
-                            PJC.inserir_pessoa_juridica(pessoaJuridica);
+
+                            //IMPORTANTE MUDANÇA!
+                            //PJC.inserir_pessoa_juridica(pessoaJuridica);
 
                             /*Parte onde inserimos o endereco da pessoa na tabela endereco do BD*/
 
@@ -269,10 +317,47 @@ public class Principal {
                                 Endereco_conex EndConex = new Endereco_conex(conexao_BD);
                                 Endereco novo_endereco = new Endereco(Rua, num_residencia, bairro, cidade, UF);
                                 EndConex.inserir_endereco(novo_endereco);
+                                PJC.inserir_pessoa_juridica(pessoaJuridica);
+                                /*pegar o id do endereço adicionado agora! */
+                                st.executeQuery("SELECT id_endereco FROM endereco WHERE rua = '" + Rua +
+                                        "' AND cidade = '" + cidade + "' AND UF = '" + UF + "';");
+                                ResultSet rs_idEndereco = st.getResultSet();
+                                int id_endereco = rs_idEndereco.getInt("id_endereco");
+
+                                /*Pegando o ID do usuário adicionado agora!, que no caso é o CNPJ! Então não vai precisar*/
+
+
+
+                                /* inserindo na tabela de relacionamento entre pessoa fisica e endereço*/
+                                st.executeQuery("INSERT INTO pessoaJuridica_endereco(id_pessoaJuridica,id_endereco)" +
+                                        " VALUES('"+CNPJ+"',"+id_endereco+")");
+
+
                             } else {
+
+                                PJC.inserir_pessoa_juridica(pessoaJuridica);
+                                /*pegar o id do endereço adicionado agora! */
+                                st.executeQuery("SELECT id_endereco FROM endereco WHERE rua = '" + Rua +
+                                        "' AND cidade = '" + cidade + "' AND UF = '" + UF + "';");
+                                ResultSet rs_idEndereco = st.getResultSet();
+                                int id_endereco = rs_idEndereco.getInt("id_endereco");
+
+                                /*Pegando o ID do usuário adicionado agora!, que no caso é o CNPJ! Então não vai precisar*/
+
+
+
+                                /* inserindo na tabela de relacionamento entre pessoa fisica e endereço*/
+                                st.executeQuery("INSERT INTO pessoaJuridica_endereco(id_pessoaJuridica,id_endereco)" +
+                                        " VALUES('"+CNPJ+"',"+id_endereco+")");
+
+
+
+
+                                //o antigo
                                 /* pegaria o id_endereco e relacionar com o id_usuario do usuario que está sendo
                                  * colocado agora.
                                  *  */
+                                /*
                                 Endereco_conex EndConex = new Endereco_conex(conexao_BD);
 
                                 // pegamos o id_usuario que estamos cadastrando
@@ -288,6 +373,7 @@ public class Principal {
 
                                 st.executeQuery("INSERT TABLE usuario_endereco (id_usuario,id_endereco)" +
                                         "VALUES('" + id_usuario + "','" + id_endereco + "')");
+                                */
                             }
                         }
                     }

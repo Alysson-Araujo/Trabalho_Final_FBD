@@ -117,9 +117,13 @@ public class Principal {
                             System.out.print("\n");
                             /* instancia uma nova pessoa para colocar no BD*/
                             Pessoa_fisica pessoaFisica = new Pessoa_fisica(Nome, email, telefone, CPF);
-
                             Pessoa_fisica_conex PFC = new Pessoa_fisica_conex(conexao_BD);
-                            PFC.inserir_pessoa_fisica(pessoaFisica);
+                            System.out.println("AAAAAAAAAAAAAAA");
+
+
+
+
+                            PFC.inserir_pessoa_fisica2(Nome,email,telefone,CPF);
 
                             /*Parte onde inserimos o endereco da pessoa na tabela endereco do BD*/
 
@@ -127,6 +131,7 @@ public class Principal {
                              * está em tal cidade*/
 
                             Statement st = conexao_BD.createStatement();
+
                             st.executeQuery("SELECT rua,cidade,UF,numero FROM endereco WHERE rua = '" + Rua +
                                     "' AND cidade = '" + cidade + "' AND UF = '" + UF + "' AND rua = "+
                                     num_residencia+" ;");
@@ -394,7 +399,7 @@ public class Principal {
                     break;
 
                 case 3:
-                    System.out.print("Digite o CNPJ da pessoa física: ");
+                    System.out.print("Digite o CNPJ da pessoa juridica/empresa: ");
                     String CNPJ= in.nextLine();
                     Crud.excluir_pessoa_juridica(CNPJ);
                     break;

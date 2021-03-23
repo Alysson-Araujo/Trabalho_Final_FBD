@@ -36,11 +36,11 @@ public class Pessoa_juridica_conex {
     }
 
     public void inserir_pessoa_juridica2(String Nome,String email,String telefone,String CNPJ, String tipo_empresa) throws SQLException{
-        String sql_code = "INSERT INTO pessoa_juridica (nome,email,telefone,CNPJ) VALUES" + "('"+Nome+"','"+email+"','"
-                +telefone+"','"+CNPJ+");";
+        String sql_code = "INSERT INTO pessoa_juridica (nome,email,telefone,CNPJ,tipo_empresa) VALUES" + "('"+Nome+"','"+email+"','"
+                +telefone+"','"+CNPJ+"','"+tipo_empresa+"');";
         PreparedStatement inserir = conexao.prepareStatement(sql_code);
         inserir.execute();
-        //conexao.close();
+        conexao.close();
     }
 
     public void remover_pessoa_juridica(String CNPJ) throws  SQLException{

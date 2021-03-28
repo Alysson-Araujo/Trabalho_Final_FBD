@@ -12,15 +12,15 @@ public class Principal {
         System.out.println("_________________________________________\n");
         System.out.println("    AGENDA TELEFONICA ONLINE!              ");
         System.out.println("_________________________________________\n");
-        System.out.println("[1] - Insira um novo usuário");//
-        System.out.println("[2] - Remover uma pessoa física");//
-        System.out.println("[3] - Remover uma pessoa jurídica"); //
-        System.out.println("[4] - Alterar algum dado de uma pessoa física");// n feito
-        System.out.println("[5] - Alterar algum dado de uma pessoa jurídica");// n feito
-        System.out.println("[6] - Mostrar por todos os enderecos de uma cidade:");// n feito
-        System.out.println("[7] - Busque por uma pessoa fisica:");// n feito
-        System.out.println("[8] - busque por todas as pessoas que moram em um determinado estado");// n feito
-        System.out.println("[9] - busque por todas as pessoas que moram em uma determinada rua");// n feito
+        System.out.println("[1] - Insira um novo usuário;");// feito
+        System.out.println("[2] - Remover uma pessoa física;");// feito
+        System.out.println("[3] - Remover uma pessoa jurídica;"); // feito
+        System.out.println("[4] - Alterar algum dado de uma pessoa física;");// feito
+        System.out.println("[5] - Alterar algum dado de uma pessoa jurídica;");// feito
+        System.out.println("[6] - Mostrar por todos os enderecos de uma cidade;");// feito
+        System.out.println("[7] - Listar por todas as pessoa física e seus endereços;");// feito
+        System.out.println("[8] - Listar por todas as pessoas jurídicas/empresa e seus endereços;");// feito
+        System.out.println("[0] - Sair do programa;");
     }
 
 
@@ -56,8 +56,6 @@ public class Principal {
                         System.out.print("Nome Completo: ");
                         String Nome = in.nextLine();
 
-
-
                         System.out.print("\n");
                         System.out.print("e-mail: ");
                         String email = in.nextLine();
@@ -65,7 +63,6 @@ public class Principal {
                         System.out.print("\n");
                         System.out.print("telefone: ");
                         String telefone = in.nextLine();
-
 
                         System.out.print("\n");
                         System.out.print("CPF: ");
@@ -90,12 +87,10 @@ public class Principal {
                         System.out.print("\n");
                         System.out.print("UF: ");
                         String UF = in.nextLine();
-
-
-
                         System.out.print("\n");
+
+
                         /* instancia uma nova pessoa para colocar no BD*/
-                        Pessoa_fisica pessoaFisica = new Pessoa_fisica(Nome, email, telefone, CPF);
                         Pessoa_fisica_conex PFC = new Pessoa_fisica_conex(conexao_BD);
                         PFC.inserir_pessoa_fisica2(Nome,email,telefone,CPF);
 
@@ -284,8 +279,7 @@ public class Principal {
                 case 5:
                     System.out.println("[1] para mudar o nome \n" +
                             "[2] para mudar o email \n" +
-                            "[3] para mudar o telefone \n" +
-                            "[4] para mudar o CNPJ");
+                            "[3] para mudar o telefone \n");
                     String opcao_PJ = in.nextLine();
                     Crud.alterar_dados_pessoa_juridica(opcao_PJ);
                     break;
@@ -303,11 +297,25 @@ public class Principal {
                     Crud.buscar_ruas_pela_cidade(cidade,UF);
                     break;
 
+
+                case 7:
+                    Crud.mostrar_pessoaFisica_endereco();
+                    break;
+
+                case 8:
+                    Crud.mostrar_pessoaJuridica_endereco();
+                    break;
+
                 case 0:
                     programa = false;
+                    conexao_BD.close();
+                    System.out.println("OBRIGADO POR USAR A AGENDA TELEFONICA ONLINE!");
+                    break;
+
+                default:
+                    System.out.println("Por favor, digite apenas os números que aparecem no menu");
                     break;
             }
-
         }
     }
 }

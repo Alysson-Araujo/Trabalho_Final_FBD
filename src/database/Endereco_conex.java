@@ -28,48 +28,6 @@ public class Endereco_conex {
 
     }
 
-    /*
-    public void remover_endereco(endereco endereco) throws SQLException{
-        String sql_code = "DELETE FROM USUARIO WHERE ID = "+endereco.getID_end()+"";
-        PreparedStatement inserir = conexao.prepareStatement(sql_code);
-        inserir.execute();
-        conexao.close();
-    }
-    */
-    public void update_rua(Endereco endereco) throws SQLException{
-        String sql_code = "UPDATE CLIENTE SET rua = '"+endereco.getRua()+"' WHERE ID = "+endereco.getID_end()+"";
-        PreparedStatement inserir = conexao.prepareStatement(sql_code);
-        inserir.execute();
-        conexao.close();
-    }
-
-    public void update_numero(Endereco endereco) throws SQLException{
-        String sql_code = "UPDATE CLIENTE SET numero = '"+endereco.getNumero()+"' WHERE ID = "+endereco.getID_end()+"";
-        PreparedStatement inserir = conexao.prepareStatement(sql_code);
-        inserir.execute();
-        conexao.close();
-    }
-
-    public void update_bairro(Endereco endereco) throws SQLException{
-        String sql_code = "UPDATE CLIENTE SET barrio = '"+endereco.getBairro()+"' WHERE ID = "+endereco.getID_end()+"";
-        PreparedStatement inserir = conexao.prepareStatement(sql_code);
-        inserir.execute();
-        conexao.close();
-    }
-
-    public void update_cidade(Endereco endereco) throws SQLException{
-        String sql_code = "UPDATE CLIENTE SET cidade = '"+endereco.getCidade()+"' WHERE ID = "+endereco.getID_end()+"";
-        PreparedStatement inserir = conexao.prepareStatement(sql_code);
-        inserir.execute();
-        conexao.close();
-    }
-
-    public void update_UF(Endereco endereco) throws SQLException{
-        String sql_code = "UPDATE CLIENTE SET UF = '"+endereco.getUF()+"' WHERE ID = "+endereco.getID_end()+"";
-        PreparedStatement inserir = conexao.prepareStatement(sql_code);
-        inserir.execute();
-        conexao.close();
-    }
 
     public void insert_pessoajuridica_endereco(String CNPJ, String Rua, String Cidade, String UF, int num_residencia) throws SQLException{
 
@@ -98,7 +56,6 @@ public class Endereco_conex {
         String sql_code = "INSERT INTO pessoafisica_endereco (id_pesfis,id_endereco) VALUES ('"+CPF+"',"+id_endereco+")";
         PreparedStatement inserir = conexao.prepareStatement(sql_code);
         inserir.execute();
-
     }
 
 }

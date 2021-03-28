@@ -3,7 +3,7 @@ package exec;
 import database.*;
 import agenda1.*;
 
-import java.beans.beancontext.BeanContextServiceRevokedEvent;
+
 import java.sql.*;
 import java.util.Scanner;
 
@@ -29,10 +29,6 @@ public class Principal {
     public static void main(String[] args) throws SQLException {
         Scanner in = new Scanner(System.in);
         Connection conexao_BD = new conexao().getConnection();
-        //usuario_conex colocar = new usuario_conex(teste);
-        //colocar.tested();
-        //Crud.mostrar_todos_tabela("endereco");
-        //teste.close();
         boolean existeNaTabelaEndereco = false;
         /* Objeto para adicionar uma pessoa física*/
 
@@ -96,10 +92,7 @@ public class Principal {
 
 
 
-
                         // Parte onde inserimos o endereco da pessoa na tabela endereco do BD
-
-
 
                         /*Primeiro vamos verificar se o endereco escrito já está na tabela, no caso se a rua
                          * está em tal cidade*/
@@ -150,9 +143,6 @@ public class Principal {
                         System.out.print("Nome Completo: ");
                         String Nome = in.nextLine();
 
-
-
-
                         System.out.print("\n");
                         System.out.print("e-mail: ");
                         String email = in.nextLine();
@@ -161,13 +151,9 @@ public class Principal {
                         System.out.print("telefone: ");
                         String telefone = in.nextLine();
 
-
-
                         System.out.print("\n");
                         System.out.print("CNPJ: ");
                         String CNPJ = in.nextLine();
-
-
 
                         System.out.print("\n");
                         System.out.print("Rua: ");
@@ -202,20 +188,11 @@ public class Principal {
                         //IMPORTANTE MUDANÇA!
                         PJC.inserir_pessoa_juridica2(Nome,email,telefone,CNPJ,Tipo_empresa);
 
-
-
-
                         /*Parte onde inserimos o endereco da pessoa na tabela endereco do BD*/
 
                         Statement st = conexao_BD.createStatement();
 
                         Endereco_conex EndConex = new Endereco_conex(conexao_BD);
-                        //Endereco novo_endereco = new Endereco(Rua, num_residencia, bairro, cidade, UF);
-
-                        //EndConex.inserir_endereco(Rua,num_residencia,bairro,cidade,UF);
-
-                        //EndConex.insert_pessoajuridica_endereco(CNPJ,Rua,cidade,UF,num_residencia);
-
 
                         // PREPARANDO PARA INSERIR NA TABELA ENDERECO
                         st.executeQuery("SELECT rua,cidade,UF,numero FROM endereco WHERE rua = '" + Rua +
@@ -226,7 +203,6 @@ public class Principal {
 
                         /*Evitando que ruas se repetem, eu não vou colocar um while verificando linha por linha
                          * já que a estrutura que fizemos não vai permitir que isso aconteca*/
-
 
                         while (rs.next()) {
                             String verifica_cidade = rs.getString("cidade");
@@ -241,7 +217,6 @@ public class Principal {
                                 existeNaTabelaEndereco = false;
                             }
                         }
-
                         if(existeNaTabelaEndereco){
                             EndConex.insert_pessoajuridica_endereco(CNPJ,Rua,cidade,UF,num_residencia);
                         }
@@ -249,11 +224,7 @@ public class Principal {
                             EndConex.inserir_endereco(Rua,num_residencia,bairro,cidade,UF);
                             EndConex.insert_pessoajuridica_endereco(CNPJ,Rua,cidade,UF,num_residencia);
                         }
-
-
-
                     }
-
                     break;
 
                 case 2:

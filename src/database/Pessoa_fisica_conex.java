@@ -18,7 +18,4 @@ public class Pessoa_fisica_conex {
         statement.execute();
 
     }
-
-
-
 }

@@ -46,7 +46,7 @@ public class Principal {
         numerador = Integer.parseInt(in.nextLine());
             switch (numerador){
                 case 1:
-                    try {
+
                         System.out.println("Digite [1] para cadastrar uma Pessoa Física; \n" +
                                 "Digite [2] para cadastrar uma Pessoa Jurídica;");
                         int tipoCadastro = Integer.parseInt(in.nextLine());
@@ -55,12 +55,7 @@ public class Principal {
                             System.out.println("Diga as informações que essa pessoa possui abaixo >>> ");
                             System.out.print("Nome Completo: ");
                             String Nome = in.nextLine();
-                            for(int i =0;i < Nome.length();i++){
-                                Character caractere1 = Nome.charAt(i);
-                                if(Character.isDigit(caractere1)){
-                                    throw new Exception();
-                                }
-                            }
+
 
 
                             System.out.print("\n");
@@ -70,22 +65,11 @@ public class Principal {
                             System.out.print("\n");
                             System.out.print("telefone: ");
                             String telefone = in.nextLine();
-                            for(int i =0;i < telefone.length();i++){
-                                Character caractere2 = telefone.charAt(i);
-                                if(Character.isAlphabetic(caractere2)){
-                                    throw new Exception();
-                                }
-                            }
+
 
                             System.out.print("\n");
                             System.out.print("CPF: ");
                             String CPF = in.nextLine();
-                            for(int i =0;i < CPF.length();i++){
-                                Character caractere3 = CPF.charAt(i);
-                                if(Character.isAlphabetic(caractere3)){
-                                    throw new Exception();
-                                }
-                            }
 
                             System.out.print("\n");
                             System.out.print("Rua: ");
@@ -106,42 +90,33 @@ public class Principal {
                             System.out.print("\n");
                             System.out.print("UF: ");
                             String UF = in.nextLine();
-                            for(int i =0;i < Nome.length();i++){
-                                Character caractere4 = UF.charAt(i);
-                                if(Character.isDigit(caractere4)){
-                                    throw new Exception();
-                                }
-                            }
+
 
 
                             System.out.print("\n");
                             /* instancia uma nova pessoa para colocar no BD*/
                             Pessoa_fisica pessoaFisica = new Pessoa_fisica(Nome, email, telefone, CPF);
                             Pessoa_fisica_conex PFC = new Pessoa_fisica_conex(conexao_BD);
-                            System.out.println("AAAAAAAAAAAAAAA");
-
-
-
-
                             PFC.inserir_pessoa_fisica2(Nome,email,telefone,CPF);
 
-                            /*Parte onde inserimos o endereco da pessoa na tabela endereco do BD*/
+
+                            // Parte onde inserimos o endereco da pessoa na tabela endereco do BD
+
+
 
                             /*Primeiro vamos verificar se o endereco escrito já está na tabela, no caso se a rua
                              * está em tal cidade*/
+                            System.out.println("teste1");
+                            Endereco_conex endereco = new Endereco_conex(conexao_BD);
 
-                            Statement st = conexao_BD.createStatement();
+                            System.out.println("teste2");
+                            endereco.inserir_endereco(Rua,num_residencia,bairro,cidade,UF); // dando erro aqui
 
-                            st.executeQuery("SELECT rua,cidade,UF,numero FROM endereco WHERE rua = '" + Rua +
-                                    "' AND cidade = '" + cidade + "' AND UF = '" + UF + "' AND rua = "+
-                                    num_residencia+" ;");
-                            ResultSet rs = st.getResultSet();
-
-
+                            System.out.println("teste3");
                             /*Evitando que ruas se repetem, eu não vou colocar um while verificando linha por linha
                              * já que a estrutura que fizemos não vai permitir que isso aconteca*/
 
-
+/*
                             while (rs.next()) {
                                 String verifica_cidade = rs.getString("cidade");
                                 String verifica_rua = rs.getString("rua");
@@ -156,69 +131,8 @@ public class Principal {
                                 }
                             }
 
+*/
 
-                            if (!existeNaTabelaEndereco) {
-                                Endereco_conex EndConex = new Endereco_conex(conexao_BD);
-                                Endereco novo_endereco = new Endereco(Rua, num_residencia, bairro, cidade, UF);
-                                EndConex.inserir_endereco(novo_endereco);
-
-
-                                /*pegar o id do endereço adicionado agora! */
-                                st.executeQuery("SELECT id_endereco FROM endereco WHERE rua = '" + Rua +
-                                        "' AND cidade = '" + cidade + "' AND UF = '" + UF + "';");
-                                ResultSet rs_idEndereco = st.getResultSet();
-                                int id_endereco = rs_idEndereco.getInt("id_endereco");
-
-                                /*Pegando o ID do usuário adicionado agora!, que no caso é o CPF! Então não vai precisar*/
-
-
-
-                                /* inserindo na tabela de relacionamento entre pessoa fisica e endereço*/
-                                String sql_code ="INSERT INTO pessoafisica_endereco(id_pessoafisica,id_endereco)" +
-                                        " VALUES('"+CPF+"',"+id_endereco+")";
-                                PreparedStatement inserir = conexao_BD.prepareStatement(sql_code);
-                                inserir.execute();
-
-
-                            } else {
-                                /* nessa situação, o endereco já está presente na tabela endereço
-                                 *  */
-
-                                /*pegar o id do endereço adicionado agora! */
-                                st.executeQuery("SELECT id_endereco FROM endereco WHERE rua = '" + Rua +
-                                        "' AND cidade = '" + cidade + "' AND UF = '" + UF + "';");
-                                ResultSet rs_idEndereco = st.getResultSet();
-                                int id_endereco = rs_idEndereco.getInt("id_endereco");
-
-                                /*Pegando o ID do usuário adicionado agora!, que no caso é o CPF! Então não vai precisar*/
-
-
-
-                                /* inserindo na tabela de relacionamento entre pessoa fisica e endereço*/
-
-
-                                String sql_code ="INSERT INTO pessoafisica_endereco(id_pessoafisica,id_endereco)" +
-                                        " VALUES('"+CPF+"',"+id_endereco+")";
-                                PreparedStatement inserir = conexao_BD.prepareStatement(sql_code);
-                                inserir.execute();
-
-
-
-                                /* o antigo que estava
-                                Endereco_conex EndConex = new Endereco_conex(conexao_BD);
-                                // pegamos o id_usuario que estamos cadastrando
-                                st.executeQuery("SELECT id_usuario FROM pessoa_fisica WHERE CPF = '" + CPF + "';");
-                                rs = st.getResultSet();
-                                int id_usuario = rs.getInt("id_usuario");
-                                // pegamos o id_endereco do endereco já presente na tabela endereco
-                                st.executeQuery("SELECT id_endereco FROM endereco WHERE rua = '" + Rua + "' AND cidade = '" +
-                                        cidade + "' AND UF= '" + UF + "';");
-                                rs = st.getResultSet();
-                                int id_endereco = rs.getInt("id_endereco");
-                                st.executeQuery("INSERT TABLE usuario_endereco (id_usuario,id_endereco)" +
-                                        "VALUES('" + id_usuario + "','" + id_endereco + "')");
-                                */
-                            }
 
                         }
 
@@ -228,12 +142,8 @@ public class Principal {
                             System.out.println("Diga as informações que essa pessoa possui abaixo >>> ");
                             System.out.print("Nome Completo: ");
                             String Nome = in.nextLine();
-                            for(int i =0;i < Nome.length();i++){
-                                Character caractere = Nome.charAt(i);
-                                if(Character.isDigit(caractere)){
-                                    throw new Exception();
-                                }
-                            }
+
+
 
 
                             System.out.print("\n");
@@ -243,22 +153,14 @@ public class Principal {
                             System.out.print("\n");
                             System.out.print("telefone: ");
                             String telefone = in.nextLine();
-                            for(int i =0;i < telefone.length();i++){
-                                Character caractere = telefone.charAt(i);
-                                if(Character.isAlphabetic(caractere)){
-                                    throw new Exception(telefone);
-                                }
-                            }
+
+
 
                             System.out.print("\n");
                             System.out.print("CNPJ: ");
                             String CNPJ = in.nextLine();
-                            for(int i =0;i < CNPJ.length();i++){
-                                Character caractere = CNPJ.charAt(i);
-                                if(Character.isAlphabetic(caractere)){
-                                    throw new Exception();
-                                }
-                            }
+
+
 
                             System.out.print("\n");
                             System.out.print("Rua: ");
@@ -293,22 +195,51 @@ public class Principal {
                             //IMPORTANTE MUDANÇA!
                             PJC.inserir_pessoa_juridica2(Nome,email,telefone,CNPJ,Tipo_empresa);
 
+
+
+
                             /*Parte onde inserimos o endereco da pessoa na tabela endereco do BD*/
+
+                            Statement st = conexao_BD.createStatement();
+                            Endereco_conex EndConex = new Endereco_conex(conexao_BD);
+                            Endereco novo_endereco = new Endereco(Rua, num_residencia, bairro, cidade, UF);
+                            EndConex.inserir_endereco(Rua,num_residencia,bairro,cidade,UF);
+
+                            EndConex.insert_pessoajuridica_endereco(CNPJ,Rua,cidade,UF);
+
+                            /*pegar o id do endereço adicionado agora! */
+
+
+                            /*Pegando o ID do usuário adicionado agora!, que no caso é o CNPJ! Então não vai precisar*/
+
+
+
+                            /* inserindo na tabela de relacionamento entre pessoa fisica e endereço*/
+
+
+
+
+
+
 
                             /*Primeiro vamos verificar se o endereco escrito já está na tabela, no caso se a rua
                              * está em tal cidade*/
 
+/*
+
                             Statement st = conexao_BD.createStatement();
                             st.executeQuery("SELECT rua,cidade,UF,numero FROM endereco WHERE rua = '" + Rua +
-                                    "' AND cidade = '" + cidade + "' AND UF = '" + UF + "' AND rua = "+
+                                    "' AND cidade = '" + cidade + "' AND UF = '" + UF + "' AND numero = "+
                                     num_residencia+" ;");
                             ResultSet rs = st.getResultSet();
+
+*/
 
 
                             /*Evitando que ruas se repetem, eu não vou colocar um while verificando linha por linha
                              * já que a estrutura que fizemos não vai permitir que isso aconteca*/
 
-
+/*
                             while (rs.next()) {
                                 String verifica_cidade = rs.getString("cidade");
                                 String verifica_rua = rs.getString("rua");
@@ -322,74 +253,13 @@ public class Principal {
                                     existeNaTabelaEndereco = false;
                                 }
                             }
-
-
-                            if (!existeNaTabelaEndereco) {
-                                Endereco_conex EndConex = new Endereco_conex(conexao_BD);
-                                Endereco novo_endereco = new Endereco(Rua, num_residencia, bairro, cidade, UF);
-                                EndConex.inserir_endereco(novo_endereco);
-                                PJC.inserir_pessoa_juridica(pessoaJuridica);
-                                /*pegar o id do endereço adicionado agora! */
-                                st.executeQuery("SELECT id_endereco FROM endereco WHERE rua = '" + Rua +
-                                        "' AND cidade = '" + cidade + "' AND UF = '" + UF + "';");
-                                ResultSet rs_idEndereco = st.getResultSet();
-                                int id_endereco = rs_idEndereco.getInt("id_endereco");
-
-                                /*Pegando o ID do usuário adicionado agora!, que no caso é o CNPJ! Então não vai precisar*/
-
-
-
-                                /* inserindo na tabela de relacionamento entre pessoa fisica e endereço*/
-                                st.executeQuery("INSERT INTO pessoaJuridica_endereco(id_pessoaJuridica,id_endereco)" +
-                                        " VALUES('"+CNPJ+"',"+id_endereco+")");
-
-
-                            } else {
-
-                                PJC.inserir_pessoa_juridica(pessoaJuridica);
-                                /*pegar o id do endereço adicionado agora! */
-                                st.executeQuery("SELECT id_endereco FROM endereco WHERE rua = '" + Rua +
-                                        "' AND cidade = '" + cidade + "' AND UF = '" + UF + "';");
-                                ResultSet rs_idEndereco = st.getResultSet();
-                                int id_endereco = rs_idEndereco.getInt("id_endereco");
-
-                                /*Pegando o ID do usuário adicionado agora!, que no caso é o CNPJ! Então não vai precisar*/
-
-
-
-                                /* inserindo na tabela de relacionamento entre pessoa fisica e endereço*/
-                                st.executeQuery("INSERT INTO pessoaJuridica_endereco(id_pessoaJuridica,id_endereco)" +
-                                        " VALUES('"+CNPJ+"',"+id_endereco+")");
+*/
 
 
 
 
-                                //o antigo
-                                /* pegaria o id_endereco e relacionar com o id_usuario do usuario que está sendo
-                                 * colocado agora.
-                                 *  */
-                                /*
-                                Endereco_conex EndConex = new Endereco_conex(conexao_BD);
-                                // pegamos o id_usuario que estamos cadastrando
-                                st.executeQuery("SELECT id_usuario FROM pessoa_fisica WHERE CPF = '" + CNPJ + "';");
-                                rs = st.getResultSet();
-                                int id_usuario = rs.getInt("id_usuario");
-                                // pegamos o id_endereco do endereco já presente na tabela endereco
-                                st.executeQuery("SELECT id_endereco FROM endereco WHERE rua = '" + Rua + "' AND cidade = '" +
-                                        cidade + "' AND UF= '" + UF + "';");
-                                rs = st.getResultSet();
-                                int id_endereco = rs.getInt("id_endereco");
-                                st.executeQuery("INSERT TABLE usuario_endereco (id_usuario,id_endereco)" +
-                                        "VALUES('" + id_usuario + "','" + id_endereco + "')");
-                                */
-                            }
                         }
-                    }
-                    catch (NumberFormatException e){
-                        System.out.println("Valores Errados. Por favor, escreva aquilo que está sendo pedido no formato correto!" + " " +
-                                "\n Voltando para o menu...");
-                    }
-                    catch(Exception e){System.out.print("");}
+
                     break;
 
                 case 2:

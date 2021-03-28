@@ -40,7 +40,7 @@ public class Pessoa_juridica_conex {
                 +telefone+"','"+CNPJ+"','"+tipo_empresa+"');";
         PreparedStatement inserir = conexao.prepareStatement(sql_code);
         inserir.execute();
-        conexao.close();
+
     }
 
     public void remover_pessoa_juridica(String CNPJ) throws  SQLException{

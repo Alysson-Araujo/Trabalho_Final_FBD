@@ -72,7 +72,8 @@ public class Crud {
         String CPF;
         Scanner in = new Scanner(System.in);
         Connection conexao = new conexao().getConnection();
-        Statement st = conexao.createStatement();
+        String sql;
+        PreparedStatement statement;
 
         switch (opcao) {
             //nome
@@ -82,7 +83,11 @@ public class Crud {
                 System.out.println("Digite o novo nome da pessoa:");
                 String nome_novo = in.nextLine();
 
-                st.executeQuery("UPDATE pessoa_fisica SET nome = '" + nome_novo + "' where CPF = '" + CPF + "'");
+
+                sql = "UPDATE pessoa_fisica SET nome = '"+nome_novo+"' WHERE CPF = '"+CPF+"'";
+                statement = conexao.prepareStatement(sql);
+                statement.execute();
+                conexao.close();
                 break;
 
             //email
@@ -92,7 +97,12 @@ public class Crud {
                 System.out.println("Digite o novo email da pessoa:");
                 String novo_email = in.nextLine();
 
-                st.executeQuery("UPDATE pessoa_fisica SET email = '" + novo_email + "' where CPF = '" + CPF + "'");
+
+                sql = "UPDATE pessoa_fisica SET email = '" + novo_email + "' where CPF = '" + CPF + "'";
+                statement = conexao.prepareStatement(sql);
+                statement.execute();
+                conexao.close();
+
                 break;
 
             //telefone
@@ -103,7 +113,10 @@ public class Crud {
                 System.out.println("Digite o novo telefone da pessoa:");
                 String novo_telefone = in.nextLine();
 
-                st.executeQuery("UPDATE pessoa_fisica SET telefone = '" + novo_telefone + "' where CPF = '" + CPF + "'");
+                sql = "UPDATE pessoa_fisica SET telefone = '" + novo_telefone + "' where CPF = '" + CPF + "'";
+                statement = conexao.prepareStatement(sql);
+                statement.execute();
+                conexao.close();
                 break;
         }
     }
@@ -113,7 +126,8 @@ public class Crud {
         String tipo_empresa;
         Scanner in = new Scanner(System.in);
         Connection conexao = new conexao().getConnection();
-        Statement st = conexao.createStatement();
+        String sql;
+        PreparedStatement statement;
 
         switch (opcao) {
             //nome
@@ -123,7 +137,11 @@ public class Crud {
                 System.out.println("Digite o novo nome da pessoa:");
                 String nome_novo = in.nextLine();
 
-                st.executeQuery("UPDATE pessoa_juridica SET nome = '" + nome_novo + "' where CPF = '" + CNPJ + "'");
+
+                sql = "UPDATE pessoa_juridica SET nome = '" + nome_novo + "' where CPF = '" + CNPJ + "'";
+                statement = conexao.prepareStatement(sql);
+                statement.execute();
+                conexao.close();
                 break;
 
             //email
@@ -133,7 +151,12 @@ public class Crud {
                 System.out.println("Digite o novo email da pessoa:");
                 String novo_email = in.nextLine();
 
-                st.executeQuery("UPDATE pessoa_juridica SET email = '" + novo_email + "' where CPF = '" + CNPJ + "'");
+
+                sql = "UPDATE pessoa_juridica SET email = '" + novo_email + "' where CPF = '" + CNPJ + "'";
+                statement = conexao.prepareStatement(sql);
+                statement.execute();
+                conexao.close();
+
                 break;
 
             //telefone
@@ -144,7 +167,11 @@ public class Crud {
                 System.out.println("Digite o novo telefone da pessoa:");
                 String novo_telefone = in.nextLine();
 
-                st.executeQuery("UPDATE pessoa_juridica SET telefone = '" + novo_telefone + "' where CPF = '" + CNPJ + "'");
+
+                sql = "UPDATE pessoa_juridica SET telefone = '" + novo_telefone + "' where CPF = '" + CNPJ + "'";
+                statement = conexao.prepareStatement(sql);
+                statement.execute();
+                conexao.close();
                 break;
 
             //mudar o cnpj
@@ -154,7 +181,11 @@ public class Crud {
                 System.out.println("Digite o novo cnpj da pessoa:");
                 String novo_cnpj = in.nextLine();
 
-                st.executeQuery("UPDATE pessoa_juridica SET CNPJ = '" + novo_cnpj + "' where CPF = '" + CNPJ + "'");
+
+                sql = "UPDATE pessoa_juridica SET CNPJ = '" + novo_cnpj + "' where CPF = '" + CNPJ + "'";
+                statement = conexao.prepareStatement(sql);
+                statement.execute();
+                conexao.close();
                 break;
         }
     }
@@ -162,6 +193,8 @@ public class Crud {
     public static void buscar_ruas_pela_cidade(String cidade, String UF) throws SQLException {
         Connection conexao = new conexao().getConnection();
         Statement st = conexao.createStatement();
+        st.executeQuery("SELECT * FROM endereco");
+        ResultSet teste = st.getResultSet();
 
         st.executeQuery("SELECT cidade,rua,bairro,UF AS ESTADO FROM endereco WHERE cidade = '" + cidade + "' AND " +
                 "UF = '" + UF + "'");

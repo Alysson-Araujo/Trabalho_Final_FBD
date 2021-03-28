@@ -39,7 +39,7 @@ public class Pessoa_fisica_conex {
                 +telefone+"','"+CPF+"');";
         PreparedStatement statement = conexao.prepareStatement(sql_code);
         statement.execute();
-        conexao.close();
+
     }
 
     public void remover_pessoa_fisica (Pessoa_fisica PF) throws  SQLException{

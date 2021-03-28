@@ -1,10 +1,11 @@
 package database;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 
 import agenda1.Endereco;
+
+import javax.print.DocFlavor;
+import javax.swing.*;
 
 
 public class Endereco_conex {
@@ -14,12 +15,17 @@ public class Endereco_conex {
         this.conexao = conexao;
     }
 
-    public void inserir_endereco(Endereco endereco) throws SQLException{
-        String sql_code = "INSERT INTO endereco (rua,numero,bairro,cidade,UF) VALUES" + "('"+endereco.getRua()+"',"+
-                endereco.getNumero()+",'"+endereco.getBairro()+"','"+endereco.getCidade()+"','"+endereco.getUF()+"');";
+    public void inserir_endereco(String rua, int num_residencia, String bairro, String cidade, String UF) throws SQLException{
+        /*Statement st = conexao.createStatement();
+        st.executeUpdate("INSERT INTO endereco (rua, numero, bairro, cidade, uf) VALUES " + "('"+rua+"',"+
+                num_residencia+",'"+bairro+"','"+cidade+"','"+UF+"');");
+*/
+
+        String sql_code = "INSERT INTO endereco (rua, numero, bairro, cidade, uf) VALUES " + "('"+rua+"',"+
+                num_residencia+",'"+bairro+"','"+cidade+"','"+UF+"');";
         PreparedStatement inserir = conexao.prepareStatement(sql_code);
         inserir.execute();
-        conexao.close();
+
     }
 
     /*
@@ -63,6 +69,18 @@ public class Endereco_conex {
         PreparedStatement inserir = conexao.prepareStatement(sql_code);
         inserir.execute();
         conexao.close();
+    }
+
+    public void insert_pessoajuridica_endereco(String CNPJ, String Rua, String Cidade, String UF) throws SQLException{
+        Statement st = conexao.createStatement();
+        st.executeQuery("SELECT id_endereco FROM endereco WHERE rua = '"+Rua+"'AND cidade = '"+Cidade+"' AND uf = '"+UF+"'");
+
+        ResultSet rs = st.getResultSet();
+        rs.next();
+        int id_endereco = rs.getInt("id_endereco");
+        String sql_code = "INSERT INTO pessoajuridica_endereco (CNPJ,id_endereco) VALUES ('"+CNPJ+"',"+rs+")";
+        PreparedStatement inserir = conexao.prepareStatement(sql_code);
+        inserir.execute();
     }
 
 }

@@ -227,11 +227,8 @@ public class Crud {
         ResultSet rs;
 
         /*
-
         select PJ.nome, PJ.telefone, EN.rua, EN.numero, EN.bairro, EN.cidade, EN.uf, PJ.tipo_empresa from pessoa_juridica PJ, pessoajuridica_endereco PJE,
         endereco EN WHERE PJ.cnpj = PJE.id_pesjur AND PJE.id_endereco = EN.id_endereco ORDER BY nome, tipo_empresa asc
-
-
         */
 
         st.executeQuery("SELECT PJ.nome, PJ.telefone, PJ.email, EN.rua, EN.numero, EN.bairro, EN.cidade, EN.uf, PJ.tipo_empresa FROM pessoa_juridica PJ, " +

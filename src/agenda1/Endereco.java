@@ -33,7 +33,6 @@ public class Endereco {
         this.ID_end = ID_end;
     }
 
-
     public String getRua() {
         return rua;
     }

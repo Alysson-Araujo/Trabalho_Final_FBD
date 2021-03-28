@@ -10,13 +10,11 @@ public class Pessoa_juridica extends Usuario {
     private String tipo_empresa;
     private Connection conexao;
 
-
     public Pessoa_juridica(String nome, String email, String telefone, String CNPJ, String tipo_empresa){
         super(nome, email, telefone);
         this.CNPJ = CNPJ;
         this.tipo_empresa = tipo_empresa;
     }
-
 
     public String getCNPJ() {
         return CNPJ;
@@ -34,14 +32,6 @@ public class Pessoa_juridica extends Usuario {
         this.tipo_empresa = tipo_empresa;
     }
 
-/*
-    public void update_tipo_empresa(Pessoa_juridica PJ) throws SQLException{
-        String sql_code = "UPDATE CLIENTE SET nome = '"+PJ.getTipo_empresa()+"' WHERE ID = "+PJ.getCNPJ()+"";
-        PreparedStatement inserir = conexao.prepareStatement(sql_code);
-        inserir.execute();
-        conexao.close();
-    }
-*/
 
 }
 

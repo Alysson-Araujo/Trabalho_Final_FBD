@@ -14,19 +14,6 @@ public class Pessoa_juridica_conex {
         this.conexao = conexao;
     }
 
-/*
-    public void tested() throws SQLException {
-        String sql_code = "INSERT INTO pessoa_juridica (nome,email,telefone) VALUES('abc','abcdef@gmail.com',99824-14151)" ;
-        PreparedStatement inserir = conexao.prepareStatement(sql_code);
-        inserir.execute();
-        //conexao.close();
-    }
-*/
-
-    /* No Banco de dados,se inserirmos nas tabelas filhos, a tabela mãe também vai receber a inserção (herança em BD)
-    * LOGO, foi necessário criar a pessoa jurídica e fisica no pacote database para que o conceito funcione normalmente.
-    */
-
     public void inserir_pessoa_juridica(Pessoa_juridica PJ) throws SQLException{
         String sql_code = "INSERT INTO pessoa_juridica (nome,email,telefone,CNPJ,tipo_empresa) VALUES" + "('"+PJ.getNome()+"','"+PJ.getEmail()+"','"
                 +PJ.getTelefone()+"','"+PJ.getCNPJ()+"','"+PJ.getTipo_empresa()+"');";

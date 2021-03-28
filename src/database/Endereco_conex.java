@@ -16,11 +16,6 @@ public class Endereco_conex {
     }
 
     public void inserir_endereco(String rua, int num_residencia, String bairro, String cidade, String UF) throws SQLException{
-        /*Statement st = conexao.createStatement();
-        st.executeUpdate("INSERT INTO endereco (rua, numero, bairro, cidade, uf) VALUES " + "('"+rua+"',"+
-                num_residencia+",'"+bairro+"','"+cidade+"','"+UF+"');");
-*/
-
         String sql_code = "INSERT INTO endereco (rua, numero, bairro, cidade, uf) VALUES " + "('"+rua+"',"+
                 num_residencia+",'"+bairro+"','"+cidade+"','"+UF+"');";
         PreparedStatement inserir = conexao.prepareStatement(sql_code);
@@ -56,6 +51,5 @@ public class Endereco_conex {
         PreparedStatement inserir = conexao.prepareStatement(sql_code);
         inserir.execute();
     }
-
 }
 

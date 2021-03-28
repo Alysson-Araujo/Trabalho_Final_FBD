@@ -1,7 +1,5 @@
 package database;
 
-import agenda1.Pessoa_fisica;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;

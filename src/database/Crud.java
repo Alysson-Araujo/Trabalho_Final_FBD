@@ -246,9 +246,9 @@ public class Crud {
                     " | Bairro: "+rs.getString("bairro")+ " | Cidade: "+rs.getString("cidade")+
                     " | UF: "+ rs.getString("uf")+"\n");
 
+
         }
     }
-
     /*public static void mostrar_pessoasFisicas_cidade_bairro(String bairro, String cidade) throws SQLException{
         Connection conexao = new conexao().getConnection();
         Statement st = conexao.createStatement();

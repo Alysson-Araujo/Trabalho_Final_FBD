@@ -297,7 +297,6 @@ public class Principal {
                     Crud.buscar_ruas_pela_cidade(cidade,UF);
                     break;
 
-
                 case 7:
                     Crud.mostrar_pessoaFisica_endereco();
                     break;

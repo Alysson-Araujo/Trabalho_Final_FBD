@@ -28,7 +28,6 @@ public class Endereco_conex {
 
     }
 
-
     public void insert_pessoajuridica_endereco(String CNPJ, String Rua, String Cidade, String UF, int num_residencia) throws SQLException{
 
         Statement st = conexao.createStatement();
